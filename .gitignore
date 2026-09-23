@@ -1,0 +1,11 @@
+node_modules/
+.next/
+out/
+next-env.d.ts
+*.tsbuildinfo
+.DS_Store
+.env*.local
+
+# Raw source photography. What ships is the optimised webp set in public/img,
+# regenerated from these by scripts/optimize-images.mjs.
+assets-source/
