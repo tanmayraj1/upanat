@@ -59,16 +59,33 @@ editorial stills and the founder portrait — pulled from upanatstudio.com and
 re-encoded to sized WebP.
 
 - `public/img/` — the committed, optimised assets the site loads (~6.5 MB).
-- `public/products/`, `public/media/` — raw source files, git-ignored.
+- `assets-source/` — raw source files, git-ignored.
 - `scripts/optimize-images.mjs` — regenerates `public/img` from those sources.
+
+## Share cards
+
+`public/og.jpg` is the site card and `public/og/<slug>.jpg` is a card per pair,
+so a shared product link previews that product. Both are wired through
+`openGraph` / `twitter` metadata as absolute URLs, alongside the favicon set.
+
+The cards are a real page — `scripts/og-card.html` — captured headless at 2x,
+so the type is the actual Cormorant Garamond rather than a traced approximation.
+Regenerate after changing the card or its photography:
+
+```bash
+node scripts/generate-brand-assets.mjs   # needs Google Chrome installed
+```
 
 ## Deploying
 
 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds and
-publishes to GitHub Pages on every push to `main`. In the repository, set
-**Settings → Pages → Source** to **GitHub Actions**. The workflow derives
-`NEXT_PUBLIC_BASE_PATH` from the repository name, so both a project site
-(`/<repo>`) and a user site (`<user>.github.io`) resolve assets correctly.
+publishes to GitHub Pages on every push to `main`. It passes `enablement: true`
+to `configure-pages`, so it turns Pages on itself rather than needing a visit to
+**Settings → Pages** first.
+
+The workflow derives `NEXT_PUBLIC_BASE_PATH` and `NEXT_PUBLIC_SITE_ORIGIN` from
+the repository name, so a project site (`/<repo>`) and a user site
+(`<user>.github.io`) both resolve assets and absolute share-card URLs correctly.
 
 ## Deviations from the handoff
 

@@ -3,6 +3,12 @@ import { PRODUCTS, MENS_SIZES, WOMENS_SIZES, type Product } from '@/data/product
 /** Static export runs under /<repo> on GitHub Pages; public assets need the prefix. */
 export const BASE_PATH = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
+/** Origin the site is served from, used for absolute metadata URLs. */
+export const SITE_ORIGIN = (process.env.NEXT_PUBLIC_SITE_ORIGIN || 'https://tanmayraj1.github.io').replace(/\/$/, '');
+
+/** Absolute URL for a public asset — crawlers will not follow a relative one. */
+export const absolute = (path: string) => `${SITE_ORIGIN}${BASE_PATH}${path}`;
+
 export const asset = (path: string) => `${BASE_PATH}${path}`;
 export const img = (file: string) => asset(`/img/${file}`);
 

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Public+Sans:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    width: 1200px; height: 630px; overflow: hidden;
+    background: #0A362A; color: #FBF6EE;
+    font-family: 'Public Sans', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .card { position: relative; width: 1200px; height: 630px; display: flex; align-items: center; }
+  .jaali { position: absolute; inset: 0; opacity: .09; }
+  .bloom {
+    position: absolute; border-radius: 50%; filter: blur(60px);
+  }
+  .bloom-a { width: 620px; height: 620px; left: -140px; top: -180px;
+    background: radial-gradient(closest-side, rgba(38,122,92,.75), transparent); }
+  .bloom-b { width: 460px; height: 460px; left: 480px; top: 300px;
+    background: radial-gradient(closest-side, rgba(201,151,46,.3), transparent); }
+
+  .copy { position: relative; padding: 0 0 0 76px; width: 712px; }
+  .eyebrow {
+    font-size: 15px; font-weight: 600; letter-spacing: .24em;
+    text-transform: uppercase; color: #E8C36B;
+  }
+  h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600;
+    font-size: 78px; line-height: .98; letter-spacing: -.022em;
+    margin-top: 26px;
+  }
+  h1 .indent { padding-left: 1.1em; display: block; }
+  .rule { width: 92px; height: 1px; background: #C9972E; margin: 44px 0 28px; }
+  .mark { display: flex; align-items: center; gap: 14px; }
+  .wordmark { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600;
+    font-size: 40px; line-height: .9; letter-spacing: .02em; }
+  .studio { font-size: 12px; letter-spacing: .46em; text-transform: uppercase;
+    color: rgba(251,246,238,.62); margin-top: 5px; }
+
+  .shot { position: relative; margin-left: auto; margin-right: 66px; width: 330px; height: 424px; }
+  .shot .frame {
+    position: absolute; inset: -16px; border: 1px solid rgba(201,151,46,.6);
+    border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+  }
+  .shot img {
+    width: 100%; height: 100%; object-fit: cover;
+    border-radius: 50% 50% 0 0 / 30% 30% 0 0;
+  }
+  .edge { position: absolute; inset: 0; border: 1px solid rgba(201,151,46,.35); pointer-events: none; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <svg class="jaali" width="1200" height="630" aria-hidden="true">
+      <defs>
+        <pattern id="j" width="64" height="64" patternUnits="userSpaceOnUse">
+          <path d="M32 0L64 32 32 64 0 32z" fill="none" stroke="#E8C36B" stroke-width="1"/>
+          <circle cx="32" cy="32" r="7" fill="none" stroke="#E8C36B" stroke-width="1"/>
+          <path d="M0 0h64M0 64h64" stroke="#E8C36B" stroke-width=".5"/>
+        </pattern>
+      </defs>
+      <rect width="1200" height="630" fill="url(#j)"/>
+    </svg>
+    <div class="bloom bloom-a"></div>
+    <div class="bloom bloom-b"></div>
+
+    <div class="copy">
+      <p class="eyebrow" id="eyebrow">Handcrafted juttis · New Delhi</p>
+      <h1 id="headline">Tradition begins<span class="indent">at your feet.</span></h1>
+      <div class="rule"></div>
+      <div class="mark">
+        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="#C9972E" stroke-width="1.3" stroke-linecap="round">
+          <path d="M4 20C4 11 10 4 20 4c0 10-7 16-16 16z"/><path d="M4 20L14 10"/>
+        </svg>
+        <div>
+          <div class="wordmark">Upanat</div>
+          <div class="studio">Studio</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="shot">
+      <div class="frame"></div>
+      <img id="shot" src="../public/img/kiyana-1.webp" alt="">
+    </div>
+
+    <div class="edge"></div>
+  </div>
+<script>
+  // A product card reuses this page: ?eyebrow=&line1=&line2=&img= swaps the
+  // three pieces that change. No query string renders the brand card.
+  const q = new URLSearchParams(location.search);
+  if (q.has('line1')) {
+    document.getElementById('eyebrow').textContent = q.get('eyebrow') || '';
+    const h = document.getElementById('headline');
+    h.textContent = q.get('line1');
+    if (q.get('line2')) {
+      const span = document.createElement('span');
+      span.className = 'indent';
+      span.textContent = q.get('line2');
+      h.appendChild(span);
+    }
+    // A single long word (a product name) can afford more size than two lines.
+    if (!q.get('line2')) h.style.fontSize = '104px';
+  }
+  if (q.has('img')) document.getElementById('shot').src = q.get('img');
+</script>
+</body>
+</html>
