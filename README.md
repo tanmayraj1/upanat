@@ -79,9 +79,12 @@ node scripts/generate-brand-assets.mjs   # needs Google Chrome installed
 ## Deploying
 
 [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) builds and
-publishes to GitHub Pages on every push to `main`. It passes `enablement: true`
-to `configure-pages`, so it turns Pages on itself rather than needing a visit to
-**Settings → Pages** first.
+publishes to GitHub Pages on every push to `main`.
+
+**One-time setup:** in the repository, set **Settings → Pages → Source** to
+**GitHub Actions**. The workflow cannot do this for you — enabling Pages through
+`configure-pages`'s `enablement` option needs a write-scoped `GITHUB_TOKEN`,
+which a repository using the default read-only Actions permission does not have.
 
 The workflow derives `NEXT_PUBLIC_BASE_PATH` and `NEXT_PUBLIC_SITE_ORIGIN` from
 the repository name, so a project site (`/<repo>`) and a user site
