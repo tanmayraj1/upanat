@@ -74,7 +74,7 @@ export function OftenBoughtTogether({ slug, partner }: { slug: string; partner: 
               }}
             />
             {err && (
-              <p role="alert" className="mt-2 text-[12.5px] text-maroon">
+              <p role="alert" className="mt-2 text-[12.5px] text-alert">
                 Pick a size for both pairs.
               </p>
             )}

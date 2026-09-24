@@ -150,7 +150,7 @@ function Orders({ onTrack }: { onTrack: () => void }) {
           ))}
         </ul>
       )}
-      <button onClick={onTrack} className="mt-7 text-[12.5px] font-semibold uppercase tracking-[0.14em] text-emerald">
+      <button onClick={onTrack} className="mt-7 text-[12.5px] font-semibold uppercase tracking-[0.14em] text-primary">
         Track an order by number
       </button>
     </Section>
@@ -216,17 +216,17 @@ function Addresses() {
                     setForm({ ...form, [f.id]: e.target.value });
                     setErrors((x) => ({ ...x, [f.id]: '' }));
                   }}
-                  className={cx('field', (f.id === 'pin' || f.id === 'phone') && 'tnum', errors[f.id] && 'border-maroon')}
+                  className={cx('field', (f.id === 'pin' || f.id === 'phone') && 'tnum', errors[f.id] && 'border-alert')}
                 />
                 {errors[f.id] && (
-                  <span role="alert" className="mt-1.5 block text-[12.5px] text-maroon">
+                  <span role="alert" className="mt-1.5 block text-[12.5px] text-alert">
                     {errors[f.id]}
                   </span>
                 )}
               </label>
             ))}
             <label className="flex items-center gap-2.5 sm:col-span-2">
-              <input type="checkbox" checked={form.def} onChange={(e) => setForm({ ...form, def: e.target.checked })} className="h-4 w-4 accent-[#0F4C3A]" />
+              <input type="checkbox" checked={form.def} onChange={(e) => setForm({ ...form, def: e.target.checked })} className="h-4 w-4 accent-[#7A1F2B]" />
               <span className="text-[13.5px]">Set as default address</span>
             </label>
           </div>
@@ -256,10 +256,10 @@ function Addresses() {
               </p>
               <p className="tnum mt-1 text-[13px] text-ink-muted">+91 {a.phone}</p>
               <div className="mt-5 flex flex-wrap gap-4 text-[12px] uppercase tracking-[0.14em]">
-                <button onClick={() => setForm(a)} className="text-emerald underline underline-offset-4">
+                <button onClick={() => setForm(a)} className="text-primary underline underline-offset-4">
                   Edit
                 </button>
-                <button onClick={() => dispatch({ t: 'deleteAddress', id: a.id })} className="text-ink-muted underline underline-offset-4 hover:text-maroon">
+                <button onClick={() => dispatch({ t: 'deleteAddress', id: a.id })} className="text-ink-muted underline underline-offset-4 hover:text-alert">
                   Delete
                 </button>
                 {!a.def && (
@@ -306,7 +306,7 @@ function Details() {
           <button type="submit" className="btn-primary">
             Save changes
           </button>
-          {saved && <span className="text-[13px] font-semibold text-emerald">Saved.</span>}
+          {saved && <span className="text-[13px] font-semibold text-gold-ink">Saved.</span>}
         </div>
       </form>
     </Section>

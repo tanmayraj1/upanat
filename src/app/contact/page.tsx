@@ -70,7 +70,7 @@ export default function ContactPage() {
         </div>
 
         <Reveal className="relative hidden lg:block">
-          <div className="sticky top-[112px] flex flex-col items-center justify-center gap-8 bg-emerald-deep p-12 text-ivory" style={{ minHeight: 460 }}>
+          <div className="sticky top-[112px] flex flex-col items-center justify-center gap-8 bg-primary-deep p-12 text-ivory" style={{ minHeight: 460 }}>
             <div style={{ animation: 'spinSlow 80s linear infinite' }} aria-hidden>
               <PaisleyIcon size={130} />
             </div>

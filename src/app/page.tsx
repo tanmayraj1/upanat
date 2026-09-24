@@ -111,7 +111,7 @@ export default function HomePage() {
                           <span className="block font-display text-[24px] font-semibold leading-none tracking-[-0.01em]">{t.label}</span>
                           <span className="mt-1 block text-[11.5px] text-ink-muted">{t.sub}</span>
                         </span>
-                        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-emerald text-ivory transition-transform duration-300 ease-craft group-hover:translate-x-1">
+                        <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary text-ivory transition-transform duration-300 ease-craft group-hover:translate-x-1">
                           <ArrowRight size={17} stroke="#FBF6EE" />
                         </span>
                       </div>

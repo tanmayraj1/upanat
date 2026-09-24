@@ -85,7 +85,7 @@ export function SearchOverlay() {
 
               <div className="mt-5 flex flex-wrap gap-2">
                 {TRENDING.map((t) => (
-                  <button key={t} onClick={() => setQ(t)} className="chip hover:border-emerald hover:text-emerald">
+                  <button key={t} onClick={() => setQ(t)} className="chip hover:border-primary hover:text-primary">
                     {t}
                   </button>
                 ))}

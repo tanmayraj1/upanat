@@ -107,7 +107,7 @@ export function ShopView() {
         {CATEGORIES.map((c) => (
           <label key={c} className="flex cursor-pointer items-center justify-between py-1.5 text-[14px]">
             <span className="flex items-center gap-2.5">
-              <input type="checkbox" checked={f.cats.includes(c)} onChange={() => toggle('cats', c)} className="h-4 w-4 accent-[#0F4C3A]" />
+              <input type="checkbox" checked={f.cats.includes(c)} onChange={() => toggle('cats', c)} className="h-4 w-4 accent-[#7A1F2B]" />
               {c}
             </span>
             <span className="tnum text-[12px] text-ink-muted">{countFor(c)}</span>
@@ -124,14 +124,14 @@ export function ShopView() {
               aria-pressed={f.sizes.includes(s)}
               className={cx(
                 'tnum h-[38px] min-w-[46px] border px-2 text-[13px] transition-colors duration-200 lg:h-[34px] lg:min-w-[40px]',
-                f.sizes.includes(s) ? 'border-emerald bg-emerald text-ivory' : 'border-line-strong hover:border-ink'
+                f.sizes.includes(s) ? 'border-primary bg-primary text-ivory' : 'border-line-strong hover:border-ink'
               )}
             >
               {i < WOMENS_SIZES.length ? s : `UK ${s}`}
             </button>
           ))}
         </div>
-        <button onClick={() => setUi({ sizeGuide: true })} className="mt-3 text-[12.5px] text-emerald underline underline-offset-4">
+        <button onClick={() => setUi({ sizeGuide: true })} className="mt-3 text-[12.5px] text-primary underline underline-offset-4">
           Not sure? Size guide
         </button>
       </FilterGroup>
@@ -147,7 +147,7 @@ export function ShopView() {
               title={c.n}
               className={cx(
                 'h-8 w-8 rounded-full border transition-transform duration-200 hover:scale-110 lg:h-7 lg:w-7',
-                f.colors.includes(c.n) ? 'border-emerald ring-2 ring-emerald ring-offset-2 ring-offset-ivory' : 'border-line-strong'
+                f.colors.includes(c.n) ? 'border-primary ring-2 ring-primary ring-offset-2 ring-offset-ivory' : 'border-line-strong'
               )}
               style={{ background: c.hex }}
             />
@@ -175,24 +175,24 @@ export function ShopView() {
     <div className="shell py-12">
       <Breadcrumb trail={[{ label: 'Home', href: '/' }, { label: 'Shop' }]} />
 
-      <div className="mt-6 flex flex-wrap items-end justify-between gap-6">
+      <div className="mt-4 flex flex-wrap items-end justify-between gap-x-6 gap-y-2">
         <Rise>
           <h1 className="h-page">{title}</h1>
         </Rise>
         <Rise i={1}>
-          <p className="tnum pb-3 text-[13px] text-ink-muted">
+          <p className="tnum pb-2.5 text-[13px] text-ink-muted">
             {results.length} pair{results.length === 1 ? '' : 's'}
           </p>
         </Rise>
       </div>
 
-      <div className="mt-12 grid gap-12 lg:grid-cols-[236px_minmax(0,1fr)] lg:gap-14">
+      <div className="mt-7 grid gap-10 lg:mt-9 lg:grid-cols-[236px_minmax(0,1fr)] lg:gap-14">
         {/* Desktop: a sticky rail. Mobile: the same controls in a bottom sheet. */}
         <aside className="hidden lg:sticky lg:top-[112px] lg:block lg:self-start">
           <div className="mb-8 flex items-center justify-between">
             <h2 className="eyebrow">Filters</h2>
             {activeChips.length > 0 && (
-              <button onClick={clearAll} className="text-[12px] text-emerald underline underline-offset-4">
+              <button onClick={clearAll} className="text-[12px] text-primary underline underline-offset-4">
                 Clear all
               </button>
             )}
@@ -201,19 +201,15 @@ export function ShopView() {
         </aside>
 
         <div>
-          <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
-            <button
-              onClick={() => setFiltersOpen(true)}
-              className="btn-outline !px-5 !py-3 lg:hidden"
-              aria-haspopup="dialog"
-            >
+          <div className="up-rule flex flex-wrap items-center justify-between gap-3 pb-4">
+            <button onClick={() => setFiltersOpen(true)} className="up-control lg:hidden" aria-haspopup="dialog">
               Filters
-              {activeChips.length > 0 && <span className="tnum text-emerald">({activeChips.length})</span>}
+              {activeChips.length > 0 && <span className="tnum text-primary">({activeChips.length})</span>}
             </button>
 
             <div className="flex flex-wrap items-center gap-2">
               {activeChips.map((c) => (
-                <button key={c.label} onClick={c.clear} className="chip hover:border-maroon hover:text-maroon">
+                <button key={c.label} onClick={c.clear} className="chip hover:border-alert hover:text-alert">
                   {c.label}
                   <span aria-hidden>✕</span>
                   <span className="sr-only">Remove filter</span>
@@ -221,10 +217,10 @@ export function ShopView() {
               ))}
             </div>
 
-            <div className="flex items-center gap-4">
-              <label className="flex items-center gap-2 text-[12.5px]">
+            <div className="flex items-center gap-2.5">
+              <label className="up-control up-control--select">
                 <span className="text-ink-muted">Sort</span>
-                <select value={sort} onChange={(e) => setSort(e.target.value)} className="border border-line-strong bg-surface px-2.5 py-1.5 text-[13px]">
+                <select value={sort} onChange={(e) => setSort(e.target.value)} aria-label="Sort products">
                   {SORTS.map((o) => (
                     <option key={o.v} value={o.v}>
                       {o.l}
@@ -232,14 +228,9 @@ export function ShopView() {
                   ))}
                 </select>
               </label>
-              <div className="flex border border-line-strong" role="group" aria-label="View">
+              <div className="up-segment" role="group" aria-label="View">
                 {(['grid', 'list'] as const).map((v) => (
-                  <button
-                    key={v}
-                    onClick={() => setView(v)}
-                    aria-pressed={view === v}
-                    className={cx('px-3 py-1.5 text-[11.5px] font-semibold uppercase tracking-[0.14em]', view === v ? 'bg-ink text-ivory' : 'text-ink-muted')}
-                  >
+                  <button key={v} onClick={() => setView(v)} aria-pressed={view === v} className={cx(view === v && 'is-on')}>
                     {v}
                   </button>
                 ))}
@@ -354,7 +345,7 @@ function FilterSheet({
             exit={{ y: '100%' }}
             transition={{ duration: 0.52, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className="flex items-center justify-between border-b border-line px-6 pb-4 pt-5">
+            <div className="up-rule flex items-center justify-between px-6 pb-4 pt-5">
               <span className="mx-auto absolute left-1/2 top-2.5 h-1 w-10 -translate-x-1/2 rounded-full bg-line-strong" aria-hidden />
               <h2 className="font-display text-[26px] font-semibold leading-none tracking-[-0.018em]">Filters</h2>
               <CloseButton onClose={onClose} />
@@ -362,7 +353,7 @@ function FilterSheet({
 
             <div className="flex-1 overflow-y-auto px-6 py-6">{children}</div>
 
-            <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-line bg-sand px-6 py-4">
+            <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 bg-sand px-6 py-4" style={{ borderTop: '1px solid rgba(201,151,46,.45)' }}>
               <button onClick={onClear} disabled={!hasFilters} className="btn-outline !px-5 !py-3 disabled:opacity-40">
                 Clear all
               </button>
@@ -380,7 +371,7 @@ function FilterSheet({
 function FilterGroup({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <section>
-      <h3 className="mb-3 border-b border-line pb-2 text-[12.5px] font-semibold uppercase tracking-[0.14em]">{title}</h3>
+      <h3 className="up-rule mb-3.5 pb-2 text-[12px] font-semibold uppercase tracking-[0.16em]">{title}</h3>
       {children}
     </section>
   );

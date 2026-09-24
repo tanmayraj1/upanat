@@ -79,7 +79,7 @@ export function Reviews({ name }: { name: string }) {
             </div>
 
             {err && (
-              <p role="alert" className="mt-3 text-[13px] text-maroon">
+              <p role="alert" className="mt-3 text-[13px] text-alert">
                 {err}
               </p>
             )}

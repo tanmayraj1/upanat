@@ -5,14 +5,15 @@ import { useEffect, useRef } from 'react';
 import { useReducedMotion } from 'framer-motion';
 import { LeafMark, PaisleyIcon, Sparkle } from '@/components/icons';
 import { Rise } from '@/components/Reveal';
+import { HERO_BADGE } from '@/data/products';
 import { asset } from '@/lib/utils';
 
-/** Ambient blooms: vw-sized radial gradients that fade at the edge, so they
- *  read as light rather than as flat discs at any viewport width. */
+/** Ambient blooms: vw-sized radial gradients in burgundy and gold that fade at
+ *  the edge, so they read as light rather than as flat discs at any width. */
 const BLOOMS = [
-  { color: 'rgba(38,122,92,.55)', size: '58vw', max: 820, left: '-10%', top: '-22%', blur: 40, dur: 74 },
-  { color: 'rgba(201,151,46,.2)', size: '40vw', max: 600, left: '26%', top: '36%', blur: 50, dur: 88 },
-  { color: 'rgba(107,31,42,.5)', size: '46vw', max: 680, left: '-14%', top: '46%', blur: 50, dur: 64 }
+  { color: 'rgba(150,46,62,.55)', size: '58vw', max: 820, left: '-10%', top: '-22%', blur: 40, dur: 74 },
+  { color: 'rgba(201,151,46,.22)', size: '40vw', max: 600, left: '26%', top: '36%', blur: 50, dur: 88 },
+  { color: 'rgba(92,22,32,.6)', size: '46vw', max: 680, left: '-14%', top: '46%', blur: 50, dur: 64 }
 ];
 
 const FLECKS = [
@@ -59,7 +60,7 @@ export function Hero() {
   }, [reduce]);
 
   return (
-    <section className="relative overflow-hidden bg-emerald-deep text-ivory">
+    <section className="relative overflow-hidden bg-primary-deep text-ivory">
       {/* Jaali lattice, 9% */}
       <div className="pointer-events-none absolute inset-0 opacity-[0.09]" aria-hidden>
         <svg width="100%" height="100%">
@@ -175,7 +176,7 @@ export function Hero() {
           {/* Floating framed badge. */}
           <div data-par="0.12" className="absolute -left-1 bottom-6 sm:-left-6 sm:bottom-auto sm:top-[18%]">
             <div
-              className="bg-emerald-deep/85 px-4 py-3 shadow-badge backdrop-blur-sm"
+              className="bg-primary-deep/85 px-4 py-3 shadow-badge backdrop-blur-sm"
               style={{ border: '1px solid rgba(201,151,46,.6)', animation: reduce ? undefined : 'bob 6.2s ease-in-out infinite' }}
             >
               <span className="flex items-center gap-2.5">
@@ -190,6 +191,24 @@ export function Hero() {
           </div>
 
           {/* Rotating paisley seal. */}
+          {/* Detail badge — renders only when HERO_BADGE carries real data, so
+              the hero never shows an invented figure. */}
+          {HERO_BADGE && (
+            <div data-par="0.08" className="absolute -right-2 top-[8%] sm:-right-6">
+              <div
+                className="bg-ivory/95 px-4 py-3 text-center shadow-badge backdrop-blur-sm"
+                style={{ border: '1px solid rgba(201,151,46,.6)', animation: reduce ? undefined : 'bob 7.4s ease-in-out .6s infinite' }}
+              >
+                <span className="tnum block font-display text-[30px] font-semibold leading-none tracking-[-0.018em] text-primary">
+                  {HERO_BADGE.value}
+                </span>
+                <span className="mt-1.5 block text-[10px] font-semibold uppercase leading-tight tracking-[0.16em] text-ink-muted">
+                  {HERO_BADGE.label}
+                </span>
+              </div>
+            </div>
+          )}
+
           <div data-par="0.10" className="absolute -bottom-5 right-0 sm:-bottom-6 sm:right-2" aria-hidden>
             <div style={{ animation: reduce ? undefined : 'spinSlow 80s linear infinite' }}>
               <PaisleyIcon size={72} className="sm:hidden" />

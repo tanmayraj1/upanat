@@ -22,28 +22,41 @@ if (!existsSync(CHROME)) {
 }
 
 mkdirSync('public/og', { recursive: true });
+/**
+ * Headless Chrome occasionally hangs on a render, which would stall the whole
+ * batch. Bound each capture and retry once before giving up.
+ */
+function capture(outPath, url) {
+  const args = [
+    '--headless=new', '--disable-gpu', '--no-first-run', '--no-default-browser-check',
+    '--disable-extensions', '--hide-scrollbars',
+    '--force-device-scale-factor=2', '--window-size=1200,630',
+    '--virtual-time-budget=6000',
+    `--screenshot=${outPath}`, url
+  ];
+  for (let attempt = 1; attempt <= 2; attempt++) {
+    try {
+      execFileSync(CHROME, args, { stdio: 'ignore', timeout: 45_000 });
+      if (existsSync(outPath)) return;
+    } catch {
+      if (attempt === 2) throw new Error(`Chrome failed to capture ${url}`);
+    }
+  }
+  throw new Error(`Chrome produced no screenshot for ${url}`);
+}
+
 const work = mkdtempSync(join(tmpdir(), 'upanat-og-'));
 const shot = join(work, 'og.png');
-
-execFileSync(CHROME, [
-  '--headless=new',
-  '--disable-gpu',
-  '--hide-scrollbars',
-  '--force-device-scale-factor=2',
-  '--window-size=1200,630',
-  '--virtual-time-budget=6000',
-  `--screenshot=${shot}`,
-  `file://${card}`
-], { stdio: 'ignore' });
+capture(shot, `file://${card}`);
 
 await sharp(shot).resize(1200, 630).jpeg({ quality: 88, chromaSubsampling: '4:4:4' }).toFile('public/og.jpg');
 rmSync(work, { recursive: true, force: true });
 
-// Favicons: the leaf mark, gold on the emerald ground so it holds up in a
+// Favicons: the leaf mark, gold on the burgundy ground so it holds up in a
 // browser tab at 16px and on a home screen at 180px.
 const mark = (size, pad) => Buffer.from(`
 <svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-  <rect width="${size}" height="${size}" fill="#0A362A"/>
+  <rect width="${size}" height="${size}" fill="#5C1620"/>
   <g transform="translate(${pad} ${pad}) scale(${(size - pad * 2) / 24})"
      fill="none" stroke="#E8C36B" stroke-width="1.6" stroke-linecap="round">
     <path d="M4 20C4 11 10 4 20 4c0 10-7 16-16 16z"/>
@@ -79,13 +92,7 @@ for (const slug of Object.keys(products)) {
 
   const dir = mkdtempSync(join(tmpdir(), 'upanat-og-'));
   const png = join(dir, 'p.png');
-  execFileSync(CHROME, [
-    '--headless=new', '--disable-gpu', '--hide-scrollbars',
-    '--force-device-scale-factor=2', '--window-size=1200,630',
-    '--virtual-time-budget=6000',
-    `--screenshot=${png}`,
-    `file://${card}?${params}`
-  ], { stdio: 'ignore' });
+  capture(png, `file://${card}?${params}`);
 
   await sharp(png).resize(1200, 630).jpeg({ quality: 88, chromaSubsampling: '4:4:4' })
     .toFile(`public/og/${slug}.jpg`);

@@ -76,7 +76,7 @@ export function ConfirmView() {
           { when: 'Next few days', note: 'Each pair is checked and carefully packed in Delhi before it ships.' },
           { when: `By ${eta}`, note: 'Estimated delivery. The tracking link arrives the moment it ships.' }
         ].map((s, i) => (
-          <li key={s.when} className="border-t-2 pt-5" style={{ borderColor: i === 0 ? '#0F4C3A' : 'rgba(201,151,46,.5)' }}>
+          <li key={s.when} className="border-t-2 pt-5" style={{ borderColor: i === 0 ? '#7A1F2B' : 'rgba(201,151,46,.5)' }}>
             <p className="font-display text-[24px] font-semibold leading-none tracking-[-0.01em]">{s.when}</p>
             <p className="mt-3 text-[13.5px] leading-relaxed text-ink-body">{s.note}</p>
           </li>
@@ -95,7 +95,7 @@ export function ConfirmView() {
   );
 }
 
-/** Gold circle draws over 900ms, then the emerald check at 720ms. */
+/** Gold circle draws over 900ms, then the burgundy check at 720ms. */
 function SuccessSeal() {
   return (
     <svg width={96} height={96} viewBox="0 0 96 96" fill="none" strokeLinecap="round" strokeLinejoin="round" className="mx-auto" aria-hidden>
@@ -112,7 +112,7 @@ function SuccessSeal() {
       />
       <path
         d="M31 49.5L43 61 66 35"
-        stroke="#0F4C3A"
+        stroke="#7A1F2B"
         strokeWidth="2.2"
         pathLength={1}
         strokeDasharray={1}

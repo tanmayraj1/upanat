@@ -116,7 +116,7 @@ function reducer(s: Persisted, a: Action): Persisted {
 export type UiState = {
   bagOpen: boolean;
   searchOpen: boolean;
-  quickView: { slug: string; move?: boolean } | null;
+  quickView: { slug: string; move?: boolean; intent?: 'buy' } | null;
   sizeGuide: boolean;
   lightbox: { slug: string; index: number } | null;
 };

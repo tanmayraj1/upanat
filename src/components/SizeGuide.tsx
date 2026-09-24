@@ -43,7 +43,7 @@ export function SizeGuide() {
               aria-pressed={tab === t}
               className={cx(
                 'px-5 py-2 text-[12px] font-semibold uppercase tracking-[0.16em] transition-colors duration-200',
-                tab === t ? 'bg-emerald text-ivory' : 'text-ink-muted hover:text-ink'
+                tab === t ? 'bg-primary text-ivory' : 'text-ink-muted hover:text-ink'
               )}
             >
               {t}

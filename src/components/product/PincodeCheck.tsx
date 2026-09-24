@@ -34,7 +34,7 @@ export function PincodeCheck({ className }: { className?: string }) {
         </button>
       </div>
       {res && (
-        <p className={cx('mt-2.5 text-[13px]', res.ok ? 'text-emerald' : 'text-maroon')} role="status">
+        <p className={cx('mt-2.5 text-[13px]', res.ok ? 'text-gold-ink' : 'text-alert')} role="status">
           {res.text}
           {res.sub && <span className="text-ink-muted"> · {res.sub}</span>}
         </p>

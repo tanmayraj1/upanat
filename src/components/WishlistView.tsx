@@ -67,7 +67,7 @@ export function WishlistView() {
                   </button>
                   <button
                     onClick={() => dispatch({ t: 'unwish', slug: p!.slug })}
-                    className="text-[12px] uppercase tracking-[0.14em] text-ink-muted underline underline-offset-4 transition-colors hover:text-maroon"
+                    className="text-[12px] uppercase tracking-[0.14em] text-ink-muted underline underline-offset-4 transition-colors hover:text-alert"
                   >
                     Remove
                   </button>

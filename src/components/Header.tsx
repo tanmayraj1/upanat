@@ -28,7 +28,7 @@ export function Header() {
 
   return (
     <>
-      <div className="bg-emerald-deep px-4 py-2 text-center text-[11px] leading-snug tracking-[0.08em] text-gold-foil sm:py-[9px] sm:text-[12px] sm:tracking-[0.1em]">
+      <div className="bg-primary-deep px-4 py-2 text-center text-[11px] leading-snug tracking-[0.08em] text-gold-foil sm:py-[9px] sm:text-[12px] sm:tracking-[0.1em]">
         Free delivery above <span className="tnum">{inr(FREE_SHIP_AT)}</span>
         <span className="hidden sm:inline"> across India</span> · Handcrafted in Delhi
       </div>
@@ -77,7 +77,7 @@ export function Header() {
             </Link>
             <Link href="/wishlist/" aria-label={`Wishlist, ${wishCount} saved`} className="up-iconbtn relative hidden no-underline lg:flex">
               <HeartIcon />
-              {ready && wishCount > 0 && <span className="up-badge bg-maroon">{wishCount}</span>}
+              {ready && wishCount > 0 && <span className="up-badge bg-alert">{wishCount}</span>}
             </Link>
             <button
               ref={bagIconRef}
@@ -87,7 +87,7 @@ export function Header() {
             >
               <BagIcon />
               {ready && count > 0 && (
-                <span data-badge className="up-badge bg-emerald">
+                <span data-badge className="up-badge bg-primary">
                   {count}
                 </span>
               )}

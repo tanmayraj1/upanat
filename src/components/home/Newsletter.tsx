@@ -29,7 +29,7 @@ export function Newsletter() {
   };
 
   return (
-    <section className="section bg-emerald text-ivory">
+    <section className="section bg-primary text-ivory">
       <div className="shell grid gap-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] lg:items-end">
         <div>
           <p className="eyebrow-foil">Stay in the loop</p>
@@ -68,7 +68,7 @@ export function Newsletter() {
                     aria-pressed={mode === m.id}
                     className={cx(
                       'px-5 py-2 text-[11.5px] font-semibold uppercase tracking-[0.16em] transition-colors duration-200',
-                      mode === m.id ? 'bg-ivory text-emerald' : 'text-ivory/70 hover:text-ivory'
+                      mode === m.id ? 'bg-ivory text-primary' : 'text-ivory/70 hover:text-ivory'
                     )}
                   >
                     {m.label}

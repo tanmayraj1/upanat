@@ -29,7 +29,7 @@ export function TrackForm({ compact = false }: { compact?: boolean }) {
           <p className="tnum font-display text-[30px] font-semibold leading-none tracking-[-0.018em]">
             {res.no} <span className="text-[16px] font-normal text-ink-muted">· {res.date}</span>
           </p>
-          <button onClick={() => setRes(null)} className="text-[12.5px] font-semibold uppercase tracking-[0.14em] text-emerald">
+          <button onClick={() => setRes(null)} className="text-[12.5px] font-semibold uppercase tracking-[0.14em] text-primary">
             Track another
           </button>
         </div>
@@ -56,7 +56,7 @@ export function TrackForm({ compact = false }: { compact?: boolean }) {
         Find order
       </button>
       {err && (
-        <p role="alert" className="mt-3 text-[13px] text-maroon">
+        <p role="alert" className="mt-3 text-[13px] text-alert">
           {err}
         </p>
       )}

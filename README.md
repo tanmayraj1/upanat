@@ -6,6 +6,11 @@ handoff in [`design-reference/HANDOFF.md`](design-reference/HANDOFF.md).
 **Stack:** Next.js 14 (App Router) · React 18 · TypeScript · Tailwind CSS ·
 Framer Motion. Statically exported, so it deploys to GitHub Pages with no server.
 
+**Palette:** burgundy primary (`#7A1F2B`) / deep (`#5C1620`) / light (`#F3E1E3`),
+gold linework, ivory ground, ink text. Tokens live in
+[`tailwind.config.ts`](tailwind.config.ts) and are mirrored as CSS custom
+properties on `:root` in [`globals.css`](src/app/globals.css).
+
 ```bash
 npm install
 npm run dev        # http://localhost:4321
@@ -93,6 +98,25 @@ the repository name, so a project site (`/<repo>`) and a user site
 ## Deviations from the handoff
 
 Worth a look before sign-off:
+
+- **Burgundy replaced the emerald primary**, along with `plum`. Gold, ivory and
+  ink are untouched. Two knock-on calls: the old `maroon` error colour sat one
+  step from the new primary, so it became `alert` (`#A3302A`) — warmer and
+  brighter, so an error still reads as an error beside a burgundy button; and
+  confirmations ("Free delivery unlocked", "Saved.", a successful pincode
+  check) moved to `gold-ink`, because a confirmation rendered in a red-family
+  primary reads as a warning. `gold-ink` itself shifted `#8C6516` → `#866014`,
+  which is the one gold change: it measured 4.45:1 on sand and so missed AA for
+  the 11.5px eyebrows set on it. Every other pairing clears AA — the lowest is
+  now 4.80:1.
+- **"Emerald" survives as product data**, because Kiyana, Begum and Chitra are
+  genuinely emerald green. The colour filter swatch and the product copy both
+  describe the shoe, not the brand.
+- **The card's hover size-panel became Add to cart / Buy now.** The handoff put
+  size chips inside the frame on hover; both actions now sit under the price and
+  open Quick View to pick a size, which is the same modal the handoff already
+  specced for that job. Buy now is resident on touch and unfolds on hover where
+  there is a pointer.
 
 - **Hero headline scale.** The spec's `clamp(65px, 8.6vw, 132px)` only breaks
   into the intended two lines when the headline runs the full container width.

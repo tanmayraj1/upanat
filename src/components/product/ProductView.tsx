@@ -54,7 +54,7 @@ export function ProductView({ slug }: { slug: string }) {
                 aria-pressed={i === frame}
                 className={cx(
                   'block w-[62px] shrink-0 transition-opacity md:w-auto',
-                  i === frame ? 'opacity-100 ring-1 ring-emerald' : 'opacity-70 hover:opacity-100'
+                  i === frame ? 'opacity-100 ring-1 ring-primary' : 'opacity-70 hover:opacity-100'
                 )}
               >
                 <ProductFrame inset={3} corners={false}>
@@ -92,7 +92,7 @@ export function ProductView({ slug }: { slug: string }) {
               <span className="h-px w-8 bg-gold/70" style={{ marginBottom: 14 }} aria-hidden />
               <p className="flex flex-wrap items-baseline gap-3">
                 {p.was && <span className="tnum text-[17px] text-strike line-through">{inr(p.was)}</span>}
-                <span className={cx('tnum font-display text-[38px] font-bold leading-none tracking-[-0.018em]', p.was ? 'text-emerald' : 'text-ink')}>
+                <span className={cx('tnum font-display text-[38px] font-bold leading-none tracking-[-0.018em]', p.was ? 'text-primary' : 'text-ink')}>
                   {inr(p.price)}
                 </span>
               </p>
@@ -105,7 +105,7 @@ export function ProductView({ slug }: { slug: string }) {
             <p className="text-[12.5px] font-semibold uppercase tracking-[0.14em]">
               Size ({sizeSystem(p)}) <span className="tnum font-normal normal-case tracking-normal text-ink-muted">· {sizeRange(p)}</span>
             </p>
-            <button onClick={() => setUi({ sizeGuide: true })} className="text-[12.5px] text-emerald underline underline-offset-4">
+            <button onClick={() => setUi({ sizeGuide: true })} className="text-[12.5px] text-primary underline underline-offset-4">
               Size guide
             </button>
           </div>
@@ -119,7 +119,7 @@ export function ProductView({ slug }: { slug: string }) {
             }}
           />
           {err && (
-            <p role="alert" className="mt-2.5 text-[13px] text-maroon">
+            <p role="alert" className="mt-2.5 text-[13px] text-alert">
               Please select your size first.
             </p>
           )}

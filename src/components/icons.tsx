@@ -32,7 +32,7 @@ export const AccountIcon = ({ size = 20, stroke = '#221A14', width = 1.3, classN
 );
 
 export const HeartIcon = ({ size = 20, stroke = '#221A14', width = 1.3, className, filled = false }: P & { filled?: boolean }) => (
-  <svg {...base(size, stroke, width)} className={className} fill={filled ? '#6B1F2A' : 'none'} stroke={filled ? '#6B1F2A' : stroke} aria-hidden>
+  <svg {...base(size, stroke, width)} className={className} fill={filled ? '#A3302A' : 'none'} stroke={filled ? '#A3302A' : stroke} aria-hidden>
     <path d="M12 20s-7.5-4.6-7.5-10.1C4.5 7.2 6.6 5 9.1 5c1.3 0 2.3.6 2.9 1.6.6-1 1.6-1.6 2.9-1.6 2.5 0 4.6 2.2 4.6 4.9C19.5 15.4 12 20 12 20z" />
   </svg>
 );

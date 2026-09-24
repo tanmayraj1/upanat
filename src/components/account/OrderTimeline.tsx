@@ -31,7 +31,7 @@ export function OrderTimeline({ order }: { order: Order }) {
               <span
                 className={cx(
                   'absolute -left-[35px] top-1 grid h-4 w-4 place-items-center rounded-full border',
-                  done ? 'border-emerald bg-emerald' : 'border-line-strong bg-ivory'
+                  done ? 'border-primary bg-primary' : 'border-line-strong bg-ivory'
                 )}
                 style={current ? { animation: 'pulseRing 2.2s ease-out infinite' } : undefined}
               />

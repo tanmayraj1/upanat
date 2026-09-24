@@ -81,7 +81,7 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
                 <Link href="/wishlist/" onClick={onClose} className="flex items-center gap-2.5 bg-ivory px-5 py-4 text-[12.5px] font-semibold uppercase tracking-[0.12em] text-ink no-underline">
                   <HeartIcon size={17} />
                   Wishlist
-                  {state.wish.length > 0 && <span className="tnum text-maroon">({state.wish.length})</span>}
+                  {state.wish.length > 0 && <span className="tnum text-alert">({state.wish.length})</span>}
                 </Link>
                 <Link href="/account/" onClick={onClose} className="flex items-center gap-2.5 bg-ivory px-5 py-4 text-[12.5px] font-semibold uppercase tracking-[0.12em] text-ink no-underline">
                   <AccountIcon size={17} />
@@ -92,14 +92,14 @@ export function MobileNav({ open, onClose }: { open: boolean; onClose: () => voi
               <ul className="border-t border-line px-6 py-5">
                 {SECONDARY.map((s) => (
                   <li key={s.label}>
-                    <Link href={s.href} onClick={onClose} className="block py-2 text-[13.5px] text-ink-body no-underline transition-colors hover:text-emerald">
+                    <Link href={s.href} onClick={onClose} className="block py-2 text-[13.5px] text-ink-body no-underline transition-colors hover:text-primary">
                       {s.label}
                     </Link>
                   </li>
                 ))}
               </ul>
 
-              <div className="relative overflow-hidden bg-emerald-deep px-6 py-7 text-ivory">
+              <div className="relative overflow-hidden bg-primary-deep px-6 py-7 text-ivory">
                 <div className="pointer-events-none absolute -right-8 -top-8 opacity-50" style={{ animation: 'spinSlow 80s linear infinite' }} aria-hidden>
                   <PaisleyIcon size={120} />
                 </div>

@@ -123,7 +123,7 @@ export function CheckoutView() {
                   aria-pressed={mode === m}
                   className={cx(
                     'px-5 py-2 text-[11.5px] font-semibold uppercase tracking-[0.16em] transition-colors duration-200',
-                    mode === m ? 'bg-emerald text-ivory' : 'text-ink-muted hover:text-ink'
+                    mode === m ? 'bg-primary text-ivory' : 'text-ink-muted hover:text-ink'
                   )}
                 >
                   {m === 'saved' ? 'Saved addresses' : 'New address'}
@@ -135,7 +135,7 @@ export function CheckoutView() {
               <div className="mt-6">
                 <p className="text-[13px] text-ink-muted">
                   Signed in as {state.details.name} ·{' '}
-                  <Link href="/account/" className="text-emerald">
+                  <Link href="/account/" className="text-primary">
                     Manage addresses
                   </Link>
                 </p>
@@ -145,12 +145,12 @@ export function CheckoutView() {
                       key={a.id}
                       className={cx(
                         'cursor-pointer bg-surface p-5 transition-[border-color,box-shadow] duration-200',
-                        selected === a.id ? 'border border-emerald shadow-[inset_0_0_0_1px_#0F4C3A]' : 'border border-line-strong'
+                        selected === a.id ? 'border border-primary shadow-[inset_0_0_0_1px_#7A1F2B]' : 'border border-line-strong'
                       )}
                     >
                       <span className="flex items-center justify-between gap-3">
                         <span className="flex items-center gap-2.5">
-                          <input type="radio" name="addr" checked={selected === a.id} onChange={() => setSelected(a.id)} className="h-4 w-4 accent-[#0F4C3A]" />
+                          <input type="radio" name="addr" checked={selected === a.id} onChange={() => setSelected(a.id)} className="h-4 w-4 accent-[#7A1F2B]" />
                           <span className="text-[12px] font-semibold uppercase tracking-[0.14em]">{a.label}</span>
                         </span>
                         {a.def && <span className="rounded-full bg-sand px-2.5 py-1 text-[10.5px] uppercase tracking-[0.14em] text-gold-ink">Default</span>}
@@ -182,7 +182,7 @@ export function CheckoutView() {
                           setGuest((g) => ({ ...g, [f.id]: e.target.value }));
                           setErrors((x) => ({ ...x, [f.id]: undefined }));
                         }}
-                        className={cx('field', f.mode === 'numeric' && 'tnum', errors[f.id] && 'border-maroon')}
+                        className={cx('field', f.mode === 'numeric' && 'tnum', errors[f.id] && 'border-alert')}
                         aria-invalid={!!errors[f.id]}
                       />
                       {errors[f.id] && <FieldError>{errors[f.id]}</FieldError>}
@@ -193,7 +193,7 @@ export function CheckoutView() {
             )}
 
             <label className="mt-7 flex cursor-pointer items-center gap-3">
-              <span className={cx('relative h-6 w-11 rounded-full transition-colors duration-300', shipDiff ? 'bg-emerald' : 'bg-line-strong')}>
+              <span className={cx('relative h-6 w-11 rounded-full transition-colors duration-300', shipDiff ? 'bg-primary' : 'bg-line-strong')}>
                 <input type="checkbox" checked={shipDiff} onChange={(e) => setShipDiff(e.target.checked)} className="sr-only" />
                 <span className={cx('absolute top-0.5 h-5 w-5 rounded-full bg-ivory transition-[left] duration-300 ease-craft', shipDiff ? 'left-[22px]' : 'left-0.5')} />
               </span>
@@ -216,7 +216,7 @@ export function CheckoutView() {
                         setAlt((a) => ({ ...a, [id]: e.target.value }));
                         setErrors((x) => ({ ...x, [`alt${id}`]: undefined }));
                       }}
-                      className={cx('field', id === 'pin' && 'tnum', errors[`alt${id}`] && 'border-maroon')}
+                      className={cx('field', id === 'pin' && 'tnum', errors[`alt${id}`] && 'border-alert')}
                     />
                     {errors[`alt${id}`] && <FieldError>{errors[`alt${id}`]}</FieldError>}
                   </label>
@@ -251,7 +251,7 @@ export function CheckoutView() {
             </ul>
             <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
               <p className="text-[12.5px] text-ink-muted">Carefully packed in Delhi and delivered within 5–7 business days · estimated by {eta}</p>
-              <Link href="/bag/" className="text-[12.5px] font-semibold uppercase tracking-[0.14em] text-emerald">
+              <Link href="/bag/" className="text-[12.5px] font-semibold uppercase tracking-[0.14em] text-primary">
                 Edit bag
               </Link>
             </div>
@@ -265,11 +265,11 @@ export function CheckoutView() {
                   key={py.id}
                   className={cx(
                     'cursor-pointer bg-surface p-5 transition-[border-color,box-shadow] duration-200',
-                    pay === py.id ? 'border border-emerald shadow-[inset_0_0_0_1px_#0F4C3A]' : 'border border-line-strong'
+                    pay === py.id ? 'border border-primary shadow-[inset_0_0_0_1px_#7A1F2B]' : 'border border-line-strong'
                   )}
                 >
                   <span className="flex items-center gap-2.5">
-                    <input type="radio" name="pay" checked={pay === py.id} onChange={() => setPay(py.id)} className="h-4 w-4 accent-[#0F4C3A]" />
+                    <input type="radio" name="pay" checked={pay === py.id} onChange={() => setPay(py.id)} className="h-4 w-4 accent-[#7A1F2B]" />
                     <span className="text-[14px] font-semibold">{py.label}</span>
                   </span>
                   <span className="mt-2 block pl-7 text-[12.5px] leading-relaxed text-ink-muted">{py.desc}</span>
@@ -293,7 +293,7 @@ export function CheckoutView() {
             </dl>
 
             {Object.keys(errors).length > 0 && (
-              <p role="alert" className="mt-4 text-[13px] text-maroon">
+              <p role="alert" className="mt-4 text-[13px] text-alert">
                 Some address details need attention.
               </p>
             )}
@@ -339,7 +339,7 @@ function SumRow({ label, value }: { label: string; value: string }) {
 
 function FieldError({ children }: { children: React.ReactNode }) {
   return (
-    <span role="alert" className="mt-1.5 block text-[12.5px] text-maroon">
+    <span role="alert" className="mt-1.5 block text-[12.5px] text-alert">
       {children}
     </span>
   );

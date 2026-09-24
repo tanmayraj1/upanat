@@ -39,7 +39,7 @@ export function PageTransition({ children }: { children: React.ReactNode }) {
           {Array.from({ length: PANELS }).map((_, i) => (
             <motion.div
               key={i}
-              className="relative h-full flex-1 bg-emerald-deep"
+              className="relative h-full flex-1 bg-primary-deep"
               initial={{ y: 0 }}
               animate={{ y: '-101%' }}
               transition={{ duration: 0.72, delay: i * 0.055, ease: EASE }}

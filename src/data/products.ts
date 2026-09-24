@@ -157,6 +157,13 @@ export const CATEGORY_TILES = [
 
 export const ORDER_STAGES = ['Order placed', 'Crafted & packed', 'Dispatched from Delhi', 'Out for delivery', 'Delivered'];
 
+/**
+ * Floating stat badge on the hero. It renders only when this is non-null, so
+ * the hero never carries an invented figure — set it once there is a real one
+ * (e.g. { value: '1,200+', label: 'pairs delivered' }).
+ */
+export const HERO_BADGE: { value: string; label: string } | null = null;
+
 export const FREE_SHIP_AT = 2999;
 export const SHIPPING_FEE = 99;
 export const COD_FEE = 49;

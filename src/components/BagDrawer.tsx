@@ -98,7 +98,7 @@ export function BagDrawer() {
                               <QtyStepper qty={l.qty} compact onChange={(d) => dispatch({ t: 'qty', key: l.key, delta: d })} />
                               <button
                                 onClick={() => dispatch({ t: 'remove', key: l.key })}
-                                className="text-[12px] uppercase tracking-[0.14em] text-ink-muted underline underline-offset-4 transition-colors hover:text-maroon"
+                                className="text-[12px] uppercase tracking-[0.14em] text-ink-muted underline underline-offset-4 transition-colors hover:text-alert"
                               >
                                 Remove
                               </button>
@@ -130,7 +130,7 @@ export function BagDrawer() {
                         </div>
                         <button
                           onClick={(e) => addToBag(x.slug, x.g === 'Men' ? 8 : 38, 1, e.currentTarget)}
-                          className="chip shrink-0 font-semibold uppercase tracking-[0.14em] hover:border-emerald hover:text-emerald"
+                          className="chip shrink-0 font-semibold uppercase tracking-[0.14em] hover:border-primary hover:text-primary"
                         >
                           Add
                         </button>

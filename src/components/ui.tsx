@@ -54,7 +54,7 @@ export function SizeChips({
           className={cx(
             'tnum border transition-[background,border-color,color,transform] duration-200 ease-craft active:scale-[.96]',
             size === 'md' ? 'h-[50px] text-[15px] sm:w-[58px]' : 'h-[38px] text-[13.5px] sm:min-w-[44px] sm:px-2',
-            value === s ? 'border-emerald bg-emerald text-ivory' : 'border-line-strong text-ink hover:border-ink'
+            value === s ? 'border-primary bg-primary text-ivory' : 'border-line-strong text-ink hover:border-ink'
           )}
         >
           {s}
@@ -151,7 +151,7 @@ export function FreeShipBar({ subtotal, className }: { subtotal: number; classNa
             <span className="tnum font-semibold">{inr(remaining)}</span> away from free delivery
           </>
         ) : (
-          <span className="font-semibold text-emerald">Free delivery unlocked</span>
+          <span className="font-semibold text-gold-ink">Free delivery unlocked</span>
         )}
       </p>
       <div className="mt-2 h-[3px] w-full bg-line">
@@ -227,7 +227,7 @@ export function Breadcrumb({ trail }: { trail: { label: string; href?: string }[
       {trail.map((t, i) => (
         <span key={t.label} className="flex items-center gap-2">
           {t.href ? (
-            <a href={t.href} className="text-ink-muted no-underline transition-colors hover:text-emerald">
+            <a href={t.href} className="text-ink-muted no-underline transition-colors hover:text-primary">
               {t.label}
             </a>
           ) : (
