@@ -1,7 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 import { LeafMark } from '@/components/icons';
+import { useStore } from '@/store/StoreProvider';
 
-const COLUMNS = [
+type FooterLink = { label: string; href: string } | { label: string; action: 'sizeGuide' };
+
+const COLUMNS: { title: string; links: FooterLink[] }[] = [
   {
     title: 'Shop',
     links: [
@@ -15,7 +20,8 @@ const COLUMNS = [
     title: 'Help',
     links: [
       { label: 'Track an order', href: '/track/' },
-      { label: 'Size guide', href: '/shop/' },
+      // The size guide is a modal rather than a route, so it opens in place.
+      { label: 'Size guide', action: 'sizeGuide' },
       { label: 'Refund & return policy', href: '/contact/' },
       { label: 'Privacy policy', href: '/contact/' }
     ]
@@ -33,6 +39,8 @@ const COLUMNS = [
 const PAYMENTS = ['UPI', 'RuPay', 'Visa', 'Mastercard', 'Net banking', 'Cash on delivery'];
 
 export function Footer() {
+  const { setUi } = useStore();
+
   return (
     <footer className="bg-ink text-ivory">
       <div className="shell grid gap-12 py-16 md:grid-cols-[minmax(0,1.3fr)_repeat(3,minmax(0,1fr))] md:gap-10">
@@ -56,9 +64,18 @@ export function Footer() {
             <ul className="space-y-2.5">
               {col.links.map((l) => (
                 <li key={l.label}>
-                  <Link href={l.href} className="text-[14px] text-ivory/75 no-underline transition-colors duration-200 hover:text-gold-foil">
-                    {l.label}
-                  </Link>
+                  {'href' in l ? (
+                    <Link href={l.href} className="text-[14px] text-ivory/75 no-underline transition-colors duration-200 hover:text-gold-foil">
+                      {l.label}
+                    </Link>
+                  ) : (
+                    <button
+                      onClick={() => setUi({ sizeGuide: true })}
+                      className="text-left text-[14px] text-ivory/75 transition-colors duration-200 hover:text-gold-foil"
+                    >
+                      {l.label}
+                    </button>
+                  )}
                 </li>
               ))}
             </ul>

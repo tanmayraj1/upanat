@@ -28,12 +28,12 @@ export function QuickView() {
   }, [slug]);
 
   const close = () => setUi({ quickView: null });
-  if (!p) return <Modal open={false} onClose={close} label="Quick view" children={null} />;
+  if (!p) return null;
 
   const wished = state.wish.includes(p.slug);
 
   return (
-    <Modal open={!!ui.quickView} onClose={close} label={`Quick view — ${p.name}`}>
+    <Modal open onClose={close} label={`Quick view — ${p.name}`}>
       <div className="grid max-h-[86vh] overflow-y-auto md:grid-cols-2">
         <div className="bg-sand p-5 md:p-7">
           <div className="flex gap-3">

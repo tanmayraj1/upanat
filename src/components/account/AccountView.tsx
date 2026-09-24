@@ -183,8 +183,7 @@ function Addresses() {
     if (!form.city.trim()) err.city = 'Enter the city.';
     if (!form.st.trim()) err.st = 'Enter the state.';
     if (!/^\d{6}$/.test(form.pin)) err.pin = 'Enter a 6-digit pincode.';
-    if (!/^\d{5}\s?\d{5}$|^\d{10}$/.test(form.phone.replace(/\D/g, '').padStart(10, '0')) && form.phone.replace(/\D/g, '').length !== 10)
-      err.phone = 'Enter a 10-digit mobile number.';
+    if (form.phone.replace(/\D/g, '').length !== 10) err.phone = 'Enter a 10-digit mobile number.';
     setErrors(err);
     if (Object.keys(err).length) return;
     dispatch({ t: 'saveAddress', a: { ...form, id: form.id || `a${Date.now()}` } });
