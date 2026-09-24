@@ -35,7 +35,7 @@ export function AccountView() {
 
       <div className="mt-14 grid gap-12 lg:grid-cols-[228px_minmax(0,1fr)] lg:gap-16">
         <nav aria-label="Account sections" className="lg:sticky lg:top-[112px] lg:self-start">
-          <ul className="flex gap-2 overflow-x-auto lg:block lg:space-y-1 lg:overflow-visible">
+          <ul className="up-noscrollbar flex gap-2 overflow-x-auto lg:block lg:space-y-1 lg:overflow-visible">
             {TABS.map((t) => (
               <li key={t.id}>
                 <button
@@ -97,17 +97,17 @@ function Orders({ onTrack }: { onTrack: () => void }) {
         <ul className="space-y-6">
           {state.orders.map((o) => (
             <li key={o.no} className="border border-line-strong bg-surface p-6">
-              <div className="flex flex-wrap items-baseline justify-between gap-4">
+              <div className="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-3">
                 <div>
                   <p className="tnum font-display text-[26px] font-semibold leading-none tracking-[-0.018em]">{o.no}</p>
                   <p className="mt-1.5 text-[12.5px] text-ink-muted">{o.date}</p>
                 </div>
-                <div className="flex items-center gap-4">
-                  <span className="tnum text-[15px] font-bold">{inr(o.total)}</span>
-                  <span className="rounded-full bg-sand px-3 py-1.5 text-[11px] font-semibold uppercase tracking-[0.14em] text-gold-ink">
-                    {ORDER_STAGES[o.stage]}
-                  </span>
-                </div>
+                <span className="tnum text-[15px] font-bold">{inr(o.total)}</span>
+                {/* The stage label is long enough to overflow a phone card, so it
+                    takes its own line rather than riding beside the total. */}
+                <span className="w-full rounded-full bg-sand px-3 py-1.5 text-center text-[11px] font-semibold uppercase tracking-[0.14em] text-gold-ink sm:w-auto sm:text-left">
+                  {ORDER_STAGES[o.stage]}
+                </span>
               </div>
 
               <ul className="mt-5 space-y-3 border-t border-line pt-5">

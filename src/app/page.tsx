@@ -80,7 +80,7 @@ export default function HomePage() {
             </Reveal>
           </div>
 
-          <div className="mt-12 grid auto-rows-[minmax(190px,22vw)] grid-cols-2 gap-5 lg:grid-cols-12">
+          <div className="mt-10 grid auto-rows-[minmax(238px,22vw)] grid-cols-2 gap-4 sm:mt-12 sm:gap-5 lg:auto-rows-[minmax(190px,22vw)] lg:grid-cols-12">
             {CATEGORY_TILES.map((t, i) => {
               const [slug, a, b] = t.a;
               return (
@@ -167,8 +167,15 @@ export default function HomePage() {
                   <p className="mt-4 max-w-[46ch] text-[14.5px] leading-relaxed text-ink-body">
                     Deep emerald with elaborate gold zardozi, leaf motifs and subtle sequin accents. Sizes 36–41.
                   </p>
-                  <span className="btn-primary relative mt-7">
-                    View {feature.name} · {inr(feature.price)}
+                  {/* Label and price are separated by a gold hairline rather than
+                      a middot, so the price reads as a value and not as more label. */}
+                  <span className="btn-primary relative mt-7 !gap-0 !px-0 !py-0">
+                    <span className="px-6 py-[15px]">View {feature.name}</span>
+                    <span className="h-[26px] w-px bg-gold-foil/45" aria-hidden />
+                    <span className="tnum px-5 py-[15px] text-gold-foil">{inr(feature.price)}</span>
+                    <span className="flex items-center pr-5" aria-hidden>
+                      <ArrowRight size={16} stroke="#E8C36B" />
+                    </span>
                     <span className="absolute -right-1.5 -top-1.5" style={{ animation: 'twinkle 4.6s ease-in-out infinite' }}>
                       <Sparkle size={12} />
                     </span>

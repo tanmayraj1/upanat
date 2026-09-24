@@ -23,6 +23,18 @@ const FLECKS = [
 export function Hero() {
   const reduce = useReducedMotion();
   const layerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // React sets `muted` as a property, so the attribute can be missing when the
+  // autoplay policy is evaluated — mobile then refuses to start. Set it on the
+  // element and ask to play; if the browser still declines, the poster stands in.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.muted = true;
+    v.defaultMuted = true;
+    v.play().catch(() => {});
+  }, []);
 
   // Parallax: ambient layers drift against the scroll, the video and copy hold still.
   useEffect(() => {
@@ -99,7 +111,7 @@ export function Hero() {
         />
       </svg>
 
-      <div className="shell relative grid items-center gap-14 py-[clamp(56px,7vw,96px)] lg:grid-cols-[minmax(0,1.15fr)_minmax(0,.85fr)] lg:gap-16">
+      <div className="shell relative grid items-center gap-10 py-[clamp(44px,7vw,96px)] sm:gap-14 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,.85fr)] lg:gap-16">
         <div>
           <Rise i={0}>
             <p className="eyebrow-foil">Handcrafted juttis · New Delhi</p>
@@ -108,7 +120,7 @@ export function Hero() {
             <h1 className="h-hero mt-6 text-ivory">
               Tradition begins
               <br />
-              <span style={{ paddingLeft: '1.1em' }}>at your feet.</span>
+              <span className="pl-0 sm:pl-[1.1em]">at your feet.</span>
             </h1>
           </Rise>
           <Rise i={2}>
@@ -118,7 +130,7 @@ export function Hero() {
             </p>
           </Rise>
           <Rise i={3}>
-            <div className="mt-10 flex flex-wrap items-center gap-7">
+            <div className="mt-9 flex flex-wrap items-center gap-x-7 gap-y-5 sm:mt-10">
               <Link href="/shop/" className="btn-ivory relative no-underline">
                 Shop the collection
                 <span className="absolute -left-2 -top-2" style={{ animation: 'twinkle 4.2s ease-in-out infinite' }}>
@@ -145,6 +157,7 @@ export function Hero() {
             />
             <div className="relative overflow-hidden" style={{ aspectRatio: '4 / 5', borderRadius: '50% 50% 0 0 / 30% 30% 0 0' }}>
               <video
+                ref={videoRef}
                 className="h-full w-full object-cover"
                 autoPlay
                 muted
@@ -160,7 +173,7 @@ export function Hero() {
           </div>
 
           {/* Floating framed badge. */}
-          <div data-par="0.12" className="absolute -left-2 top-[18%] sm:-left-6">
+          <div data-par="0.12" className="absolute -left-1 bottom-6 sm:-left-6 sm:bottom-auto sm:top-[18%]">
             <div
               className="bg-emerald-deep/85 px-4 py-3 shadow-badge backdrop-blur-sm"
               style={{ border: '1px solid rgba(201,151,46,.6)', animation: reduce ? undefined : 'bob 6.2s ease-in-out infinite' }}
@@ -177,9 +190,10 @@ export function Hero() {
           </div>
 
           {/* Rotating paisley seal. */}
-          <div data-par="0.10" className="absolute -bottom-6 right-0 sm:right-2" aria-hidden>
+          <div data-par="0.10" className="absolute -bottom-5 right-0 sm:-bottom-6 sm:right-2" aria-hidden>
             <div style={{ animation: reduce ? undefined : 'spinSlow 80s linear infinite' }}>
-              <PaisleyIcon size={86} />
+              <PaisleyIcon size={72} className="sm:hidden" />
+              <PaisleyIcon size={86} className="hidden sm:block" />
             </div>
           </div>
         </div>

@@ -36,7 +36,7 @@ export function Newsletter() {
           <h2 className="h-section mt-4 text-ivory">
             First look at
             <br />
-            <span style={{ paddingLeft: '1.1em' }}>new pairs</span>
+            <span className="pl-0 sm:pl-[1.1em]">new pairs</span>
           </h2>
         </div>
         <div>

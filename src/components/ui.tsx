@@ -8,19 +8,23 @@ import { cx, inr } from '@/lib/utils';
 
 const EASE = [0.22, 0.61, 0.36, 1] as const;
 
-/** Asymmetric section heading: long line, then a short indented one. */
+/**
+ * Asymmetric section heading: a long line, then a short indented one. The
+ * indent is dropped below `sm` — once the first line wraps on a phone, an
+ * indented third line reads as an accident rather than a composition.
+ */
 export function SectionHeading({
-  eyebrow, line1, line2, indent = '1.1em', className, foil = false
-}: { eyebrow?: string; line1: string; line2?: string; indent?: string; className?: string; foil?: boolean }) {
+  eyebrow, line1, line2, className, foil = false
+}: { eyebrow?: string; line1: string; line2?: string; className?: string; foil?: boolean }) {
   return (
     <div className={className}>
-      {eyebrow && <p className={cx('mb-4', foil ? 'eyebrow-foil' : 'eyebrow')}>{eyebrow}</p>}
+      {eyebrow && <p className={cx('mb-3.5 sm:mb-4', foil ? 'eyebrow-foil' : 'eyebrow')}>{eyebrow}</p>}
       <h2 className={cx('h-section', foil ? 'text-ivory' : 'text-ink')}>
         {line1}
         {line2 && (
           <>
             <br />
-            <span style={{ paddingLeft: indent }}>{line2}</span>
+            <span className="pl-0 sm:pl-[1.1em]">{line2}</span>
           </>
         )}
       </h2>
@@ -28,11 +32,19 @@ export function SectionHeading({
   );
 }
 
+/**
+ * A six-size run wraps to 5 + 1 when it is free to flow, which leaves an
+ * orphan on a phone. Laying it out as an even grid keeps the rows balanced.
+ */
 export function SizeChips({
   sizes, value, onChange, size = 'md', className
 }: { sizes: number[]; value: number | null; onChange: (s: number) => void; size?: 'sm' | 'md'; className?: string }) {
   return (
-    <div className={cx('flex flex-wrap gap-2', className)} role="radiogroup" aria-label="Size">
+    <div
+      className={cx('grid grid-cols-3 gap-2 sm:flex sm:flex-wrap', className)}
+      role="radiogroup"
+      aria-label="Size"
+    >
       {sizes.map((s) => (
         <button
           key={s}
@@ -41,7 +53,7 @@ export function SizeChips({
           onClick={() => onChange(s)}
           className={cx(
             'tnum border transition-[background,border-color,color,transform] duration-200 ease-craft active:scale-[.96]',
-            size === 'md' ? 'h-[50px] w-[58px] text-[15px]' : 'h-[38px] min-w-[44px] px-2 text-[13.5px]',
+            size === 'md' ? 'h-[50px] text-[15px] sm:w-[58px]' : 'h-[38px] text-[13.5px] sm:min-w-[44px] sm:px-2',
             value === s ? 'border-emerald bg-emerald text-ivory' : 'border-line-strong text-ink hover:border-ink'
           )}
         >

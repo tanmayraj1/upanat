@@ -41,16 +41,21 @@ export function ProductView({ slug }: { slug: string }) {
       <Breadcrumb trail={[{ label: 'Home', href: '/' }, { label: 'Shop', href: '/shop/' }, { label: p.cat, href: `/shop/?cat=${encodeURIComponent(p.cat)}` }, { label: p.name }]} />
 
       <div className="mt-8 grid gap-12 lg:grid-cols-[minmax(0,1.05fr)_minmax(0,.95fr)] lg:gap-16">
-        {/* Gallery */}
-        <div className="flex gap-4" data-product={p.slug}>
-          <div className="flex w-[76px] shrink-0 flex-col gap-3">
+        {/* Gallery. The thumbnail strip runs down the side on desktop and
+            scrolls horizontally under the photograph on a phone, where a 76px
+            column would leave the main image barely 260px wide. */}
+        <div className="flex flex-col gap-3 md:flex-row md:gap-4" data-product={p.slug}>
+          <div className="order-2 flex gap-2.5 overflow-x-auto md:order-1 md:w-[76px] md:shrink-0 md:flex-col md:gap-3 md:overflow-visible up-noscrollbar">
             {p.imgs.map((f, i) => (
               <button
                 key={f}
                 onClick={() => setFrame(i)}
                 aria-label={`View photograph ${i + 1}`}
                 aria-pressed={i === frame}
-                className={cx('block transition-opacity', i === frame ? 'opacity-100 ring-1 ring-emerald' : 'opacity-70 hover:opacity-100')}
+                className={cx(
+                  'block w-[62px] shrink-0 transition-opacity md:w-auto',
+                  i === frame ? 'opacity-100 ring-1 ring-emerald' : 'opacity-70 hover:opacity-100'
+                )}
               >
                 <ProductFrame inset={3} corners={false}>
                   <Image src={img(f)} alt="" fill sizes="76px" className="object-cover" />
@@ -58,7 +63,7 @@ export function ProductView({ slug }: { slug: string }) {
               </button>
             ))}
           </div>
-          <div className="relative min-w-0 flex-1">
+          <div className="relative order-1 min-w-0 flex-1 md:order-2">
             <ProductFrame>
               <Image key={frame} src={img(p.imgs[frame])} alt={`${p.name} — photograph ${frame + 1}`} fill priority sizes="(max-width: 1024px) 92vw, 560px" className="up-fade object-cover" />
             </ProductFrame>
@@ -83,12 +88,17 @@ export function ProductView({ slug }: { slug: string }) {
             <h1 className="h-pdp mt-3">{p.name}</h1>
           </Rise>
           <Rise i={2}>
-            <p className="mt-6 flex flex-wrap items-baseline gap-3">
-              {p.was && <span className="tnum text-[16px] text-strike line-through">{inr(p.was)}</span>}
-              <span className={cx('tnum text-[24px] font-bold', p.was && 'text-emerald')}>{inr(p.price)}</span>
-              <span className="text-[12.5px] text-ink-muted">Inclusive of GST</span>
-            </p>
-            <p className="mt-5 max-w-[50ch] text-[15px] leading-relaxed text-ink-body">{p.short}.</p>
+            <div className="mt-6 flex items-end gap-4">
+              <span className="h-px w-8 bg-gold/70" style={{ marginBottom: 14 }} aria-hidden />
+              <p className="flex flex-wrap items-baseline gap-3">
+                {p.was && <span className="tnum text-[17px] text-strike line-through">{inr(p.was)}</span>}
+                <span className={cx('tnum font-display text-[38px] font-bold leading-none tracking-[-0.018em]', p.was ? 'text-emerald' : 'text-ink')}>
+                  {inr(p.price)}
+                </span>
+              </p>
+            </div>
+            <p className="mt-2.5 text-[12px] uppercase tracking-[0.14em] text-ink-muted">Inclusive of GST</p>
+            <p className="mt-6 max-w-[50ch] text-[15px] leading-relaxed text-ink-body">{p.short}.</p>
           </Rise>
 
           <div className="mt-9 flex items-end justify-between">
@@ -114,10 +124,18 @@ export function ProductView({ slug }: { slug: string }) {
             </p>
           )}
 
-          <div className="mt-7 flex flex-wrap items-center gap-3">
+          <div className="mt-7 grid grid-cols-[auto_1fr] items-center gap-3 sm:grid-cols-[auto_minmax(0,1fr)_auto]">
             <QtyStepper qty={qty} onChange={(d) => setQty((q) => Math.max(1, q + d))} />
+            <button
+              onClick={() => toggleWish(p.slug)}
+              aria-label={wished ? 'Remove from wishlist' : 'Save to wishlist'}
+              aria-pressed={wished}
+              className="order-2 grid h-[50px] w-[50px] place-items-center justify-self-end border border-ink transition-transform active:scale-95 sm:order-3"
+            >
+              <HeartIcon filled={wished} />
+            </button>
             <AddToBagButton
-              className="flex-1"
+              className="order-3 col-span-2 min-w-0 sm:order-2 sm:col-span-1"
               onAdd={(el) => {
                 if (size == null) {
                   setErr(true);
@@ -126,14 +144,6 @@ export function ProductView({ slug }: { slug: string }) {
                 addToBag(p.slug, size, qty, el);
               }}
             />
-            <button
-              onClick={() => toggleWish(p.slug)}
-              aria-label={wished ? 'Remove from wishlist' : 'Save to wishlist'}
-              aria-pressed={wished}
-              className="grid h-[50px] w-[50px] place-items-center border border-ink transition-transform active:scale-95"
-            >
-              <HeartIcon filled={wished} />
-            </button>
           </div>
 
           <Link

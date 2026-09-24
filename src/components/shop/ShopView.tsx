@@ -1,5 +1,6 @@
 'use client';
 
+import { AnimatePresence, motion } from 'framer-motion';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter, useSearchParams } from 'next/navigation';
@@ -8,7 +9,7 @@ import { ProductCard } from '@/components/ProductCard';
 import { ProductFrame } from '@/components/ProductFrame';
 import { HeartIcon } from '@/components/icons';
 import { Reveal, Rise } from '@/components/Reveal';
-import { Breadcrumb, EmptyState } from '@/components/ui';
+import { Breadcrumb, CloseButton, EmptyState } from '@/components/ui';
 import { CATEGORIES, COLORS, MENS_SIZES, PRODUCTS, WOMENS_SIZES, type Category } from '@/data/products';
 import { cx, img, inr, sizeRange } from '@/lib/utils';
 import { useStore } from '@/store/StoreProvider';
@@ -100,6 +101,76 @@ export function ShopView() {
     if (q || gender || catParam) router.push('/shop/');
   };
 
+  const filterBody = (
+    <div className="space-y-8">
+      <FilterGroup title="Category">
+        {CATEGORIES.map((c) => (
+          <label key={c} className="flex cursor-pointer items-center justify-between py-1.5 text-[14px]">
+            <span className="flex items-center gap-2.5">
+              <input type="checkbox" checked={f.cats.includes(c)} onChange={() => toggle('cats', c)} className="h-4 w-4 accent-[#0F4C3A]" />
+              {c}
+            </span>
+            <span className="tnum text-[12px] text-ink-muted">{countFor(c)}</span>
+          </label>
+        ))}
+      </FilterGroup>
+
+      <FilterGroup title="Size">
+        <div className="flex flex-wrap gap-1.5">
+          {[...WOMENS_SIZES, ...MENS_SIZES].map((s, i) => (
+            <button
+              key={`${s}-${i}`}
+              onClick={() => toggle('sizes', s)}
+              aria-pressed={f.sizes.includes(s)}
+              className={cx(
+                'tnum h-[38px] min-w-[46px] border px-2 text-[13px] transition-colors duration-200 lg:h-[34px] lg:min-w-[40px]',
+                f.sizes.includes(s) ? 'border-emerald bg-emerald text-ivory' : 'border-line-strong hover:border-ink'
+              )}
+            >
+              {i < WOMENS_SIZES.length ? s : `UK ${s}`}
+            </button>
+          ))}
+        </div>
+        <button onClick={() => setUi({ sizeGuide: true })} className="mt-3 text-[12.5px] text-emerald underline underline-offset-4">
+          Not sure? Size guide
+        </button>
+      </FilterGroup>
+
+      <FilterGroup title="Colour">
+        <div className="flex flex-wrap gap-2.5">
+          {COLORS.map((c) => (
+            <button
+              key={c.n}
+              onClick={() => toggle('colors', c.n)}
+              aria-pressed={f.colors.includes(c.n)}
+              aria-label={c.n}
+              title={c.n}
+              className={cx(
+                'h-8 w-8 rounded-full border transition-transform duration-200 hover:scale-110 lg:h-7 lg:w-7',
+                f.colors.includes(c.n) ? 'border-emerald ring-2 ring-emerald ring-offset-2 ring-offset-ivory' : 'border-line-strong'
+              )}
+              style={{ background: c.hex }}
+            />
+          ))}
+        </div>
+      </FilterGroup>
+
+      <FilterGroup title="Price">
+        <input
+          type="range"
+          min={MIN_PRICE}
+          max={MAX_PRICE}
+          step={100}
+          value={f.max}
+          onChange={(e) => setF((c) => ({ ...c, max: Number(e.target.value) }))}
+          className="w-full"
+          aria-label="Maximum price"
+        />
+        <p className="tnum mt-2 text-[13px] text-ink-body">Up to {inr(f.max)}</p>
+      </FilterGroup>
+    </div>
+  );
+
   return (
     <div className="shell py-12">
       <Breadcrumb trail={[{ label: 'Home', href: '/' }, { label: 'Shop' }]} />
@@ -116,95 +187,30 @@ export function ShopView() {
       </div>
 
       <div className="mt-12 grid gap-12 lg:grid-cols-[236px_minmax(0,1fr)] lg:gap-14">
-        <aside className="lg:sticky lg:top-[112px] lg:self-start">
-          <button
-            onClick={() => setFiltersOpen((o) => !o)}
-            aria-expanded={filtersOpen}
-            className="btn-outline w-full lg:hidden"
-          >
-            {filtersOpen ? 'Hide filters' : 'Filters'}
-          </button>
-
-          <div className={cx('mt-5 space-y-8 lg:mt-0 lg:block', filtersOpen ? 'block' : 'hidden')}>
-            <div className="flex items-center justify-between">
-              <h2 className="eyebrow">Filters</h2>
-              {activeChips.length > 0 && (
-                <button onClick={clearAll} className="text-[12px] text-emerald underline underline-offset-4">
-                  Clear all
-                </button>
-              )}
-            </div>
-
-            <FilterGroup title="Category">
-              {CATEGORIES.map((c) => (
-                <label key={c} className="flex cursor-pointer items-center justify-between py-1.5 text-[14px]">
-                  <span className="flex items-center gap-2.5">
-                    <input type="checkbox" checked={f.cats.includes(c)} onChange={() => toggle('cats', c)} className="h-4 w-4 accent-[#0F4C3A]" />
-                    {c}
-                  </span>
-                  <span className="tnum text-[12px] text-ink-muted">{countFor(c)}</span>
-                </label>
-              ))}
-            </FilterGroup>
-
-            <FilterGroup title="Size">
-              <div className="flex flex-wrap gap-1.5">
-                {[...WOMENS_SIZES, ...MENS_SIZES].map((s, i) => (
-                  <button
-                    key={`${s}-${i}`}
-                    onClick={() => toggle('sizes', s)}
-                    aria-pressed={f.sizes.includes(s)}
-                    className={cx(
-                      'tnum h-[34px] min-w-[40px] border px-2 text-[13px] transition-colors duration-200',
-                      f.sizes.includes(s) ? 'border-emerald bg-emerald text-ivory' : 'border-line-strong hover:border-ink'
-                    )}
-                  >
-                    {i < WOMENS_SIZES.length ? s : `UK ${s}`}
-                  </button>
-                ))}
-              </div>
-              <button onClick={() => setUi({ sizeGuide: true })} className="mt-3 text-[12.5px] text-emerald underline underline-offset-4">
-                Not sure? Size guide
+        {/* Desktop: a sticky rail. Mobile: the same controls in a bottom sheet. */}
+        <aside className="hidden lg:sticky lg:top-[112px] lg:block lg:self-start">
+          <div className="mb-8 flex items-center justify-between">
+            <h2 className="eyebrow">Filters</h2>
+            {activeChips.length > 0 && (
+              <button onClick={clearAll} className="text-[12px] text-emerald underline underline-offset-4">
+                Clear all
               </button>
-            </FilterGroup>
-
-            <FilterGroup title="Colour">
-              <div className="flex flex-wrap gap-2.5">
-                {COLORS.map((c) => (
-                  <button
-                    key={c.n}
-                    onClick={() => toggle('colors', c.n)}
-                    aria-pressed={f.colors.includes(c.n)}
-                    aria-label={c.n}
-                    title={c.n}
-                    className={cx(
-                      'h-7 w-7 rounded-full border transition-transform duration-200 hover:scale-110',
-                      f.colors.includes(c.n) ? 'border-emerald ring-2 ring-emerald ring-offset-2 ring-offset-ivory' : 'border-line-strong'
-                    )}
-                    style={{ background: c.hex }}
-                  />
-                ))}
-              </div>
-            </FilterGroup>
-
-            <FilterGroup title="Price">
-              <input
-                type="range"
-                min={MIN_PRICE}
-                max={MAX_PRICE}
-                step={100}
-                value={f.max}
-                onChange={(e) => setF((c) => ({ ...c, max: Number(e.target.value) }))}
-                className="w-full"
-                aria-label="Maximum price"
-              />
-              <p className="tnum mt-2 text-[13px] text-ink-body">Up to {inr(f.max)}</p>
-            </FilterGroup>
+            )}
           </div>
+          {filterBody}
         </aside>
 
         <div>
           <div className="flex flex-wrap items-center justify-between gap-4 border-b border-line pb-5">
+            <button
+              onClick={() => setFiltersOpen(true)}
+              className="btn-outline !px-5 !py-3 lg:hidden"
+              aria-haspopup="dialog"
+            >
+              Filters
+              {activeChips.length > 0 && <span className="tnum text-emerald">({activeChips.length})</span>}
+            </button>
+
             <div className="flex flex-wrap items-center gap-2">
               {activeChips.map((c) => (
                 <button key={c.label} onClick={c.clear} className="chip hover:border-maroon hover:text-maroon">
@@ -300,7 +306,74 @@ export function ShopView() {
           )}
         </div>
       </div>
+
+      <FilterSheet
+        open={filtersOpen}
+        onClose={() => setFiltersOpen(false)}
+        onClear={clearAll}
+        count={results.length}
+        hasFilters={activeChips.length > 0}
+      >
+        {filterBody}
+      </FilterSheet>
     </div>
+  );
+}
+
+/** Bottom sheet that carries the filter rail on phones and small tablets. */
+function FilterSheet({
+  open, onClose, onClear, count, hasFilters, children
+}: {
+  open: boolean;
+  onClose: () => void;
+  onClear: () => void;
+  count: number;
+  hasFilters: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <AnimatePresence>
+      {open && (
+        <div className="fixed inset-0 z-[100] lg:hidden">
+          <motion.div
+            className="absolute inset-0 bg-ink/45 backdrop-blur-[3px]"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.28 }}
+            onClick={onClose}
+          />
+          <motion.div
+            role="dialog"
+            aria-modal="true"
+            aria-label="Filters"
+            className="absolute inset-x-0 bottom-0 flex max-h-[86vh] flex-col bg-ivory"
+            style={{ borderRadius: '12px 12px 0 0', boxShadow: '0 -24px 48px -24px rgba(34,26,20,.4)' }}
+            initial={{ y: '100%' }}
+            animate={{ y: 0 }}
+            exit={{ y: '100%' }}
+            transition={{ duration: 0.52, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="flex items-center justify-between border-b border-line px-6 pb-4 pt-5">
+              <span className="mx-auto absolute left-1/2 top-2.5 h-1 w-10 -translate-x-1/2 rounded-full bg-line-strong" aria-hidden />
+              <h2 className="font-display text-[26px] font-semibold leading-none tracking-[-0.018em]">Filters</h2>
+              <CloseButton onClose={onClose} />
+            </div>
+
+            <div className="flex-1 overflow-y-auto px-6 py-6">{children}</div>
+
+            <div className="grid grid-cols-[auto_minmax(0,1fr)] items-center gap-3 border-t border-line bg-sand px-6 py-4">
+              <button onClick={onClear} disabled={!hasFilters} className="btn-outline !px-5 !py-3 disabled:opacity-40">
+                Clear all
+              </button>
+              <button onClick={onClose} className="btn-primary">
+                Show {count} pair{count === 1 ? '' : 's'}
+              </button>
+            </div>
+          </motion.div>
+        </div>
+      )}
+    </AnimatePresence>
   );
 }
 
