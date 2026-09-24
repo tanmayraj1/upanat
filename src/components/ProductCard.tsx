@@ -90,14 +90,16 @@ export function ProductCard({ p, priority = false }: { p: Product; priority?: bo
         </div>
       </div>
 
-      <Link href={`/product/${p.slug}/`} className="mt-4 flex items-start justify-between gap-4 no-underline">
+      {/* Name and price share a baseline where there is room; on a phone's
+          two-up grid the price drops below so long names stop colliding. */}
+      <Link href={`/product/${p.slug}/`} className="mt-4 flex flex-col gap-1 no-underline sm:flex-row sm:items-start sm:justify-between sm:gap-4">
         <span>
           <span className="eyebrow block">{p.cat}</span>
-          <span className="mt-1.5 block font-display text-[28px] font-semibold leading-none tracking-[-0.01em] text-ink">
+          <span className="mt-1.5 block font-display text-[clamp(22px,4.5vw,28px)] font-semibold leading-none tracking-[-0.01em] text-ink">
             {p.name}
           </span>
         </span>
-        <span className="mt-[18px] shrink-0 text-right">
+        <span className="shrink-0 sm:mt-[18px] sm:text-right">
           {p.was && <span className="tnum mr-2 text-[13px] text-strike line-through">{inr(p.was)}</span>}
           <span className={cx('tnum text-[15.5px] font-bold', p.was ? 'text-emerald' : 'text-ink')}>{inr(p.price)}</span>
         </span>

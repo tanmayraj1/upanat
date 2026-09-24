@@ -73,14 +73,14 @@ export default function AboutPage() {
 
           <div className="relative mt-14 md:h-[560px]">
             <svg className="pointer-events-none absolute inset-0 hidden h-full w-full md:block" viewBox="0 0 100 60" preserveAspectRatio="none" fill="none" aria-hidden>
+              {/* Dash lengths are in viewBox units, so no pathLength here — it would
+                  rescale the pattern to the whole path and render a solid line. */}
               <path
                 d="M14 18C30 40 44 8 58 34 68 52 80 26 92 18"
-                stroke="rgba(201,151,46,.8)"
-                strokeWidth=".35"
-                strokeDasharray="1.4 1.8"
+                stroke="rgba(201,151,46,.85)"
+                strokeWidth=".45"
+                strokeDasharray="0.1 1.6"
                 strokeLinecap="round"
-                pathLength={1}
-                style={{ animation: 'drawLine 2.4s cubic-bezier(.45,0,.2,1) .3s forwards', strokeDashoffset: 0 }}
               />
             </svg>
 
